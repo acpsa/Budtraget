@@ -1,0 +1,6 @@
+﻿services:
+  budtraget.api:
+    image: budtraget.api
+    build:
+      context: .
+      dockerfile: Budtraget.Api/Dockerfile
