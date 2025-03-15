@@ -1,0 +1,37 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  budtraget.api:
+    build:
+      context: "/Users/naveenchauhan/RiderProjects/Budtraget"
+      dockerfile: "Budtraget.Api/Dockerfile"
+      target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
+    command: []
+    entrypoint:
+    - "/opt/JetBrains/RiderDebuggerTools/linux-arm64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/JetBrains/RiderDebuggerTools/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57000"
+    - "--backend-port=57200"
+    - "--roslyn-worker-port=57400"
+    - "--timeout=60"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
+      RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    image: "budtraget.api:dev"
+    ports:
+    - "127.0.0.1:57004:57000"
+    - "127.0.0.1:57204:57200"
+    - "127.0.0.1:57404:57400"
+    volumes:
+    - "/Users/naveenchauhan/RiderProjects/Budtraget/Budtraget.Api:/app:rw"
+    - "/Users/naveenchauhan/RiderProjects/Budtraget:/src:rw"
+    - "/Users/naveenchauhan/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/naveenchauhan/.local/share/JetBrains/RiderRemoteDebugger/2024.3.3/LinuxArm64:/opt/JetBrains/RiderDebuggerTools"
+    - "/Applications/Rider.app/Contents/bin/backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    - "/Users/naveenchauhan/Library/Logs/JetBrains/Rider2024.3/DebuggerWorker/JetBrains.Debugger.Worker.2025_2_16_23_52_15:/var/opt/JetBrains/RiderDebuggerTools:rw"
+    working_dir: "/app"

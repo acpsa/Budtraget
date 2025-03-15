@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C#: Budtraget.Api Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/Budtraget.Api/Budtraget.Api.csproj"
+        },
+        {
+            "name": "Docker: .NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "1",
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "exec",
+                    "-i",
+                    "Budtraget",
+                    "sh",
+                    "-c"
+                ],
+                "debuggerPath": "/app/publish/dotnet",
+                "pipeCwd": "${workspaceRoot}"
+            },
+            "sourceFileMap": {
+                "/app": "${workspaceRoot}"
+            }
+        },
+        {
+            "name": "Docker .NET Launch",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "netCore": {
+                "appProject": "${workspaceFolder}/Budtraget.Api/Budtraget.Api.csproj"
+            }
+        }
+    ]
+}
