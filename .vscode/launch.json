@@ -11,7 +11,7 @@
             "projectPath": "${workspaceFolder}/Budtraget.Api/Budtraget.Api.csproj"
         },
         {
-            "name": "Docker: .NET Core Attach",
+            "name": "Docker: Budtraget.Api",
             "type": "coreclr",
             "request": "attach",
             "processId": "1",
@@ -29,7 +29,8 @@
             },
             "sourceFileMap": {
                 "/app": "${workspaceRoot}"
-            }
+            },
+            "preLaunchTask": "Start Budtraget.Api Container"
         },
         {
             "name": "Docker .NET Launch",
