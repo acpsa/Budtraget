@@ -96,12 +96,6 @@
             "netCore": {
                 "appProject": "${workspaceFolder}/Budtraget.Api/Budtraget.Api.csproj"
             }
-        },
-        {
-            "label": "Start Budtraget.Api Container",
-            "type": "shell",
-            "command": "docker ps -q -f name=Budtraget || docker run --rm -d --name Budtraget -p 8080:8080 -p 5005:5005 budtraget-api",
-            "problemMatcher": []
         }
     ]
 }

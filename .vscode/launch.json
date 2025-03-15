@@ -11,28 +11,6 @@
             "projectPath": "${workspaceFolder}/Budtraget.Api/Budtraget.Api.csproj"
         },
         {
-            "name": "Docker: Budtraget.Api",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "1",
-            "pipeTransport": {
-                "pipeProgram": "docker",
-                "pipeArgs": [
-                    "exec",
-                    "-i",
-                    "Budtraget",
-                    "sh",
-                    "-c"
-                ],
-                "debuggerPath": "/app/publish/dotnet",
-                "pipeCwd": "${workspaceRoot}"
-            },
-            "sourceFileMap": {
-                "/app": "${workspaceRoot}"
-            },
-            "preLaunchTask": "Start Budtraget.Api Container"
-        },
-        {
             "name": "Docker .NET Launch",
             "type": "docker",
             "request": "launch",

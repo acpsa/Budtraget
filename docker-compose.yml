@@ -9,4 +9,4 @@ services:
       context: .
       dockerfile: Budtraget.Api/Dockerfile
     ports:
-      - 5000:5000
+      - 5126:5126
