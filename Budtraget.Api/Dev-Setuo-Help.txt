@@ -1,6 +1,57 @@
-VS Code
+########################################
+            VS Code
+########################################
 
 
+********************
+    VARIABLES
+********************
+export IMGN="budtraget-api-dock"
+export IMGV="1.0"
+export CONN="budtraget-api-dock-con"
+echo $IMGN:$IMGV
 
 
-Rider
+********************
+    DOCKER FILE
+********************
+cd "/Users/naveenchauhan/RiderProjects/Budtraget/Budtraget.Api"
+
+=> BUILD
+docker build -t budtraget-api-dock:1.0 .
+docker build -t $IMGN:$IMGV .
+----------------------------------------------------------------
+
+=> RUN
+docker ps -q -f name=Budtraget || docker run -d --rm --name Budtraget -p 8080:8080 -p 5005:5005 budtraget-api
+docker ps -q -f name=$CONN || docker run -d --rm --name $CONN -p 8080:8080 -p 5005:5005 $IMGN:$IMGV
+docker ps -q -f name=$CONN
+docker run -d --rm --name $CONN -p 8080:8080 -p 5005:5005 $IMGN:$IMGV
+----------------------------------------------------------------
+
+=> START
+docker start $CONN
+
+
+********************
+    DOCKER COMPOSE
+********************
+
+=> BUILD
+docker-compose -f docker-compose.yml -f docker-compose.debug.yml build --no-cache
+----------------------------------------------------------------
+
+=> COMPOSE UP
+docker-compose -f docker-compose.debug.yml up --build
+
+=> COMPOSE down
+docker-compose -f docker-compose.debug.yml down
+
+=> EXEC for VSCode Debugger
+docker exec -it $(docker ps -q -f name=budtraget-compose-dev) /remote_debugger/vsdbg --interpreter=vscode
+
+########################################
+                Rider
+########################################
+
+

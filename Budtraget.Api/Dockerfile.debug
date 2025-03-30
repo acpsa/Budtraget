@@ -1,0 +1,39 @@
+# Base image for runtime (only needed at the last stage)
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 8080 5005
+
+ENV ASPNETCORE_URLS=http://+:8080
+ENV DOTNET_RUNNING_IN_CONTAINER true
+ENV DOTNET_MODIFIABLE_ASSEMBLIES=Debug
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+# Ensure root user exists
+USER root
+
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG configuration=Debug
+WORKDIR /src
+COPY ["Budtraget.Api/Budtraget.Api.csproj", "."]
+RUN dotnet restore "Budtraget.Api.csproj"
+COPY . .
+RUN dotnet build "Budtraget.Api.csproj" -c $configuration -o /app/build /p:UseAppHost=false
+
+FROM build AS publish
+ARG configuration=Debug
+RUN dotnet publish "Budtraget.Api.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+
+# Debugging Setup
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+# Ensure root access for package installation
+USER root
+RUN apt-get update && apt-get install -y unzip && \
+    curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg
+
+# Switch back to a safe non-root user
+USER app
+
+ENTRYPOINT ["dotnet", "Budtraget.Api.dll"]

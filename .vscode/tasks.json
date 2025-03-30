@@ -96,6 +96,30 @@
             "netCore": {
                 "appProject": "${workspaceFolder}/Budtraget.Api/Budtraget.Api.csproj"
             }
+        },
+        {
+            "label": "docker-compose: debug",
+            "type": "process",
+            "command": "docker-compose",
+            "args": [
+                "-f",
+                "docker-compose.debug.yml",
+                "up",
+                "--build",
+                "-d"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "docker-compose: down",
+            "type": "process",
+            "command": "docker-compose",
+            "args": [
+                "-f",
+                "docker-compose.debug.yml",
+                "down"
+            ],
+            "problemMatcher": []
         }
     ]
 }

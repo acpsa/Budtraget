@@ -18,6 +18,41 @@
             "netCore": {
                 "appProject": "${workspaceFolder}/Budtraget.Api/Budtraget.Api.csproj"
             }
+        },
+        {
+            "name": "Docker-Compose Debug",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-compose: debug",
+            "dockerServerReadyAction": {
+                "action": "openExternally",
+                "pattern": "Now listening on: (http://\\S+)"
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/Budtraget.Api/Budtraget.Api.csproj"
+            },
+            "containerName": "budtraget-compose-dev",
+            "postDebugTask": "docker-compose: down"
+        },
+        {
+            "name": "Attach to Docker",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}",
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "exec",
+                    "-i",
+                    "budtraget-compose-dev"
+                ],
+                "debuggerPath": "/remote_debugger/vsdbg",
+                "pipeCwd": "${workspaceFolder}",
+                "quoteArgs": false
+            },
+            "sourceFileMap": {
+                "/app": "${workspaceFolder}/Budtraget.Api"
+            }
         }
     ]
 }

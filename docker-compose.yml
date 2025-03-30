@@ -1,7 +1,4 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
-
-version: '3.4'
-
 services:
   budtragetapi:
     image: budtragetapi
@@ -9,4 +6,4 @@ services:
       context: .
       dockerfile: Budtraget.Api/Dockerfile
     ports:
-      - 5126:5126
+      - 8080:8080
