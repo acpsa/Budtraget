@@ -33,6 +33,7 @@ docker run -d --rm --name $CONN -p 8080:8080 -p 5005:5005 $IMGN:$IMGV
 docker start $CONN
 
 
+
 ********************
     DOCKER COMPOSE  
 ********************
@@ -54,10 +55,34 @@ docker exec -it $(docker ps -q -f name=budtraget-compose-dev) /remote_debugger/v
                 Rider
 ########################################
 
+********************
+        DOCKER  
+********************
+
+1. Create dockerfile(.debug)
+2. Create Run/Debug configuration with the docker file
+3. Run(NOT Debug) the Configuration
+4. Attach Debugger in Rider
+	-	Go to Run > Attach to Process
+	-	Select the Docker tab
+	-	Pick the container: <From step 3>
+	-	Choose the process: dotnet running Budtraget.Api.dll
+	-	Click Attach with .NET Debugger
+	-	Breakpoints will now hit as expected!
+
 
 ********************
     DOCKER COMPOSE  
 ********************
 
-docker compose -f docker-compose.debug.yml build --no-cache
-docker compose -f docker-compose.debug.yml up
+1. Create docker-compose-compose(.debug)
+2. Build and run docker compose
+    -   docker compose -f docker-compose.debug.yml build --no-cache
+    -   docker compose -f docker-compose.debug.yml up
+3. Attach Debugger in Rider
+	-	Go to Run > Attach to Process
+	-	Select the Docker tab
+	-	Pick the container: <From step 3>
+	-	Choose the process: dotnet running Budtraget.Api.dll
+	-	Click Attach with .NET Debugger
+	-   Breakpoints will now hit as expected!
