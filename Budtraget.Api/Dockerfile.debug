@@ -1,9 +1,9 @@
 # Base image for runtime (only needed at the last stage)
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
-EXPOSE 8080 5005
+EXPOSE 5126 5005
 
-ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_URLS=http://+:5126
 ENV DOTNET_RUNNING_IN_CONTAINER true
 ENV DOTNET_MODIFIABLE_ASSEMBLIES=Debug
 ENV DOTNET_USE_POLLING_FILE_WATCHER=true
@@ -30,10 +30,22 @@ COPY --from=publish /app/publish .
 
 # Ensure root access for package installation
 USER root
-RUN apt-get update && apt-get install -y unzip && \
+# Install vsdbg debugger
+
+# RUN apt-get update && apt-get install -y unzip && \
+#     curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg
+
+RUN apt-get update && apt-get install -y unzip curl && \
+    mkdir -p /vsdbg && \
     curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg
 
 # Switch back to a safe non-root user
 USER app
 
-ENTRYPOINT ["dotnet", "Budtraget.Api.dll"]
+# ENTRYPOINT ["dotnet", "Budtraget.Api.dll"]
+
+# Run the debugger in server mode. Will be used by Rider for debugging
+# CMD ["/vsdbg/vsdbg", "--interpreter=server", "--server", "--port", "5005"]
+
+# Launch app normally, Rider will attach later
+CMD ["dotnet", "Budtraget.Api.dll"]

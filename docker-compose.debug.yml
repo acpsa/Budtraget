@@ -8,17 +8,16 @@ services:
       args:
         - configuration=Debug
     ports:
-      - 5126:5126
+      - 5126:5126 # App port (still exposed, just not auto-started)
       - 5005:5005  # Debugging port
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - DOTNET_MODIFIABLE_ASSEMBLIES=debug
       - DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
-      - DOTNET_DEBUG=1
       - ASPNETCORE_URLS=http://+:5126
     volumes:
-      - ~/.vsdbg:/remote_debugger:rw
+      #- ~/.vsdbg:/remote_debugger:rw
+      #- ./Budtraget.Api:/src/Budtraget.Api:cached  # Optional: only if hot reload or code sync needed
       - ./Budtraget.Api:/src/Budtraget.Api:cached
-      - ./Budtraget.Api/bin/Debug/net9.0:/app/bin
-      - ./Budtraget.Api/obj/Debug/net9.0:/app/obj
-    command: ["dotnet", "Budtraget.Api.dll", "--server.urls", "http://+:5126", "--configuration", "Debug"]
+    # command: ["dotnet", "Budtraget.Api.dll", "--server.urls", "http://+:5126"]

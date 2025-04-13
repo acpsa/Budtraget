@@ -1,10 +1,10 @@
 ########################################
-            VS Code
+            VS Code                     
 ########################################
 
 
 ********************
-    VARIABLES
+    VARIABLES       
 ********************
 export IMGN="budtraget-api-dock"
 export IMGV="1.0"
@@ -13,7 +13,7 @@ echo $IMGN:$IMGV
 
 
 ********************
-    DOCKER FILE
+    DOCKER FILE     
 ********************
 cd "/Users/naveenchauhan/RiderProjects/Budtraget/Budtraget.Api"
 
@@ -34,7 +34,7 @@ docker start $CONN
 
 
 ********************
-    DOCKER COMPOSE
+    DOCKER COMPOSE  
 ********************
 
 => BUILD
@@ -55,3 +55,9 @@ docker exec -it $(docker ps -q -f name=budtraget-compose-dev) /remote_debugger/v
 ########################################
 
 
+********************
+    DOCKER COMPOSE  
+********************
+
+docker compose -f docker-compose.debug.yml build --no-cache
+docker compose -f docker-compose.debug.yml up
