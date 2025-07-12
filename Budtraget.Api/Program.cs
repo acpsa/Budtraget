@@ -1,7 +1,12 @@
 using Budtraget.Api.Endpoints;
 using Budtraget.Api.Services;
+using Serilog;
+using Serilog.Formatting.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Logger setup
+SetupLogger(builder);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -13,25 +18,30 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
     app.MapOpenApi();
-}
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-// Add endpoints
+// Add application endpoints
 app.MapCalculatorEndpoints();
 app.MapWeatherEndpoints(); 
 
 // Run the app
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+
+static void SetupLogger(WebApplicationBuilder builder)
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    builder.Host.UseSerilog();
+    
+    Log.Logger = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+        .WriteTo.Console() // Optional
+        .WriteTo.File(
+            new JsonFormatter(renderMessage: true), // 👈 Pretty-printed JSON formatter
+            "Logs/log.json",
+            rollingInterval: RollingInterval.Day,
+            retainedFileCountLimit: 7,
+            shared: true)
+        .CreateLogger();
 }

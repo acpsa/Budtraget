@@ -20,8 +20,20 @@ public static class CalculatorEndpoints
         ICalculatorService calculator,
         ILogger<CalculatorService> logger)
     {
-        logger.LogInformation("Calling SumUp from endpoint with a = {A}, b = {B}", a, b);
-        var result = calculator.Sumup(a, b);
-        return Results.Ok(new { a, b, sum = result });
+        var correlationId = Guid.NewGuid().ToString(); // simulate or fetch from request header
+
+        using (logger.BeginScope(new List<KeyValuePair<string, object>>
+               {
+                   new("CorrelationId", correlationId),
+                   new("Endpoint", "SumHandler")
+               }))
+        {
+            logger.LogInformation("Calling SumUp from endpoint with a = {A}, b = {B}", a, b);
+            var result = calculator.Sumup(a, b);
+            logger.LogInformation("Sum result: {Result}", result);
+
+            return Results.Ok(new { a, b, sum = result, correlationId });
+        }
+
     }
 }
