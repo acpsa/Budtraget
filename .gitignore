@@ -6,6 +6,89 @@ riderModule.iml
 Budtraget.Api/appsettings.Development.json
 Budtraget.Api/appsettings.json
 
-Budtraget.Api/.DS_Store
+**/.DS_Store
 .DS_Store
-Budtraget.Api/Logs/
+**/Logs/
+
+# -----------------------------
+# .NET Core / .NET Projects
+# -----------------------------
+bin/
+obj/
+*.user
+*.suo
+*.pdb
+*.cache
+*.dbmdl
+*.log
+*.bak
+*.vspscc
+*.vssscc
+*.vshost.*
+*.sln.docstates
+*.csproj.user
+
+# ASP.NET Core secrets
+**/appsettings.Development.json
+**/appsettings.Local.json
+**/secrets.json
+secrets/
+
+# Build Results
+Build/
+publish/
+dist/
+
+# Test Results
+TestResults/
+*.coverage
+*.coveragexml
+*.testresults
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.assets.json
+project.fragment.lock.json
+
+# -----------------------------
+# Docker
+# -----------------------------
+**/.dockerignore
+**/Dockerfile*
+docker-compose.override.yml
+.docker/
+
+# Ignore volumes/data
+volume/
+data/
+*.pid
+
+# -----------------------------
+# JetBrains Rider (.idea)
+# -----------------------------
+.idea/
+*.sln.iml
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/httpRequests/
+.idea/dictionaries/
+.idea/**/shelf/
+.idea/.idea.*
+
+# Rider-specific run configs and DB data sources
+.idea/runConfigurations/
+.idea/dataSources/
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/uiDesigner.xml
+
+# -----------------------------
+# OS-specific
+# -----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
